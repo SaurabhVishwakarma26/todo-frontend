@@ -4,15 +4,15 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "../security/AuthContext";
 
 const Login = () => {
-  const [username, setUsername] = useState("username");
-  const [password, setPassword] = useState("");
+  const [username, setUsername] = useState("dummy");
+  const [password, setPassword] = useState("dummy");
   const [error, setError] = useState(false);
   const navigate = useNavigate();
   const authContext = useAuth();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (authContext.login(username, password)) {
+    if (await authContext.login(username, password)) {
       navigate(`/welcome/${username}`);
     } else {
       setError(true);
@@ -22,7 +22,11 @@ const Login = () => {
   return (
     <div className="container">
       <h2>Login</h2>
-      {error && <p style={{color:"red"}}>Error in authentication. Please check credentials..</p>}
+      {error && (
+        <p style={{ color: "red" }}>
+          Error in authentication. Please check credentials..
+        </p>
+      )}
       <div className="LoginForm">
         <div>
           <label>User Name : </label>
